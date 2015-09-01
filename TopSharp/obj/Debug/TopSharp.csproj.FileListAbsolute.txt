@@ -1,0 +1,5 @@
+D:\My Documents\Visual Studio 2012\Projects\Private\TopOpener\TopSharp\bin\Debug\TopSharp.dll
+D:\My Documents\Visual Studio 2012\Projects\Private\TopOpener\TopSharp\bin\Debug\TopSharp.pdb
+D:\My Documents\Visual Studio 2012\Projects\Private\TopOpener\TopSharp\obj\Debug\TopSharp.dll
+D:\My Documents\Visual Studio 2012\Projects\Private\TopOpener\TopSharp\obj\Debug\TopSharp.pdb
+D:\My Documents\Visual Studio 2012\Projects\Private\TopOpener\TopSharp\obj\Debug\TopSharp.csprojResolveAssemblyReference.cache
