@@ -26,6 +26,9 @@ namespace TopFileEditor
         private TopFile topFile;
         private List<Station> Stations;
         private List<Station> CopySelectedStations = new List<Station>();
+        private IList<DataGridCellInfo> CopySelectedCells = new List<DataGridCellInfo>();
+
+        private bool CanCutAllowed = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -56,9 +59,13 @@ namespace TopFileEditor
         private void LoadGrid()
         {
             Stations = new List<Station>();
+            int i = 0;
             foreach (Shot shat in this.topFile.Shots)
             {
-                Stations.Add(new Station(shat));
+                Station station = new Station(shat);
+                station.Idx = i;
+                Stations.Add(station);
+                i++;
             }
             this.SurveyView.ItemsSource = Stations;
         }
@@ -90,20 +97,46 @@ namespace TopFileEditor
         private void Copy(object sender, ExecutedRoutedEventArgs e)
         {
             //Clipboard.SetData(DataFormats.Text, string.Join(",", numbers));
+            
+            var grid = sender as DataGrid;
+            var selectedItems = grid.SelectedItems;
+            List<System.Data.DataRowView> selectedFile = (List<System.Data.DataRowView>)grid.SelectedItems;
+
         }
 
         private void CanCopy(object sender, CanExecuteRoutedEventArgs e)
         {
-            //e.CanExecute = numbers.Count > 0;
+            var grid = sender as DataGrid;
+            this.CanCutAllowed = false;
+           /* var selectedItems = grid.SelectedItems;
+            var selectedColumns = grid.SelectedCells;
+            var column = selectedColumns[0].Column.Header;*/
+
+            // For row copy
+            if (grid.SelectedItems.Count > 0)
+            {
+                //IList<Station> nene = (IList<Station>)grid.SelectedItems;
+                this.CopySelectedStations = new List<Station>();
+                foreach(Station stejsn in grid.SelectedItems)
+                    this.CopySelectedStations.Add(stejsn);
+            }
+            // TODO: for columns copy
         }
         private void CanCut(object sender, CanExecuteRoutedEventArgs e)
         {
-            //e.CanExecute = numbers.Count > 0;
+            this.CanCutAllowed = true;
+            //e.CanExecute = sender;
+            var grid = sender as DataGrid;
+            var selectedItems = grid.SelectedItems;
+            var selectedColumns = grid.SelectedCells;
+            var column = selectedColumns[0].Column.Header;
         }
 
         private void Cut(object sender, ExecutedRoutedEventArgs e)
         {
             //e.CanExecute = numbers.Count > 0;
+            var grid = sender as DataGrid;
+            var selectedItems = grid.SelectedItems;
         }
 
         private void CanPaste(object sender, CanExecuteRoutedEventArgs e)
@@ -118,19 +151,21 @@ namespace TopFileEditor
             int iCrrentSelectedRow = this.SurveyView.SelectedIndex;
             var ClipBoardText = Clipboard.GetData(DataFormats.Text);
             var selectedCells = this.SurveyView.SelectedCells.Count;
+            DataGrid fg = sender as DataGrid;
 
-            switch (TypeOfClipboardData(ClipBoardText.ToString()))
+            switch (TypeOfClipboardData())
             {
                 case 1:
                     InsertNewColumn2Grid(ClipBoardText.ToString(), iCrrentSelectedRow);
                     break;
                 case 2:
-                    InsertNewRow2Grid(ClipBoardText.ToString(), iCrrentSelectedRow);
+                    InsertNewRow2Grid( iCrrentSelectedRow);
                     break;
                 case 3:
                     InsertNewRows2Grid(ClipBoardText.ToString(), iCrrentSelectedRow);
                     break;
             }
+            this.CanCutAllowed = false;
             //this.SurveyView.Items.Add(this.SurveyView.Items[int.Parse(Clipboard.GetText())]);
             //Close();
         }
@@ -143,24 +178,37 @@ namespace TopFileEditor
         /// </summary>
         /// <param name="CopiedData">Data that will be copied.</param>
         /// <returns></returns>
-        private int TypeOfClipboardData(string CopiedData)
+        private int TypeOfClipboardData()
         {
-            if (this.CopySelectedStations.Count > 1)
+            if (this.CopySelectedStations.Count > 0)
             {
-
+                return 2;
             }
-            else { return 1; }
-
+            else if (this.CopySelectedStations.Count > 1) { return 3; }
+            else if (this.CopySelectedStations.Count == 0 && CopySelectedCells.Count > 0)
+            {
+                //TODO: narest za columne
+                return 1;
+            }
             return -1;
         }
 
-        private void InsertNewRow2Grid(string CopiedData, int position)
+        private void InsertNewRow2Grid(int position)
         {
             //DeleteSelectedRows();
             foreach (Station station in this.CopySelectedStations)
             {
-                this.Stations.Insert(position, station);
+                Station newStation = station.Clone(this.Stations.Max(s => s.Idx) + 1);
+                this.Stations.Insert(position, newStation);
                 position++;
+            }
+            if (this.CanCutAllowed)
+            {
+                // Remove items from when cut is activated
+                foreach (Station station in this.CopySelectedStations)
+                {
+                    this.Stations.Remove(station);
+                }
             }
             this.SurveyView.Items.Refresh();
             
@@ -295,6 +343,17 @@ namespace TopFileEditor
         {
 
         }
+
+        private void SurveyView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var grid = sender as DataGrid;
+            var selected = grid.SelectedItems;
+
+            foreach (var item in selected)
+            {
+                var dog = item;
+            }
+        }
     }
     public class Station
     {
@@ -317,6 +376,7 @@ namespace TopFileEditor
         public double Azimuth { get; set; }
         public double Inclination { get; set; }
         public string Comment { get; set; }
+        public int Idx { get; set; }
 
         public Station(Shot shot)
         {
@@ -326,6 +386,16 @@ namespace TopFileEditor
             this.Azimuth = shot.Azimuth;
             this.Inclination = shot.Inclination;
             this.Comment = shot.Comment;
+        }
+
+        public Station(){}
+
+        public Station Clone(int id = -1)
+        {
+            Station station = new Station() { Azimuth = this.Azimuth, Comment = this.Comment, Distance = this.Distance, From = this.From, Inclination = this.Inclination, To = this.To };
+            if (id >= 0)
+                station.Idx = id;
+            return station;
         }
 
     }

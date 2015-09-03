@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
         <Grid HorizontalAlignment="Left" Height="100" Margin="504,157,-511,0" VerticalAlignment="Top" Width="100" Grid.Row="1" Grid.Column="2"/>
         <DataGrid Name="SurveyView" ItemsSource="{Binding Station}" AutoGenerateColumns="False"
-                  SelectionMode="Extended" SelectionUnit="CellOrRowHeader" Margin="10" CanUserAddRows="True" CanUserDeleteRows="True" CanUserSortColumns="False" HeadersVisibility="All" CopyingRowClipboardContent="SurveyView_CopyingRowClipboardContent" Grid.Row="1" Grid.ColumnSpan="3" CellEditEnding="SurveyView_CellEditEnding" BeginningEdit="SurveyView_BeginningEdit" TextInput="SurveyView_TextInput">
+                  SelectionMode="Extended" SelectionUnit="CellOrRowHeader" Margin="10" CanUserAddRows="True" CanUserDeleteRows="True" CanUserSortColumns="False" HeadersVisibility="All" CopyingRowClipboardContent="SurveyView_CopyingRowClipboardContent" Grid.Row="1" Grid.ColumnSpan="3" CellEditEnding="SurveyView_CellEditEnding" BeginningEdit="SurveyView_BeginningEdit" TextInput="SurveyView_TextInput" SelectionChanged="SurveyView_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="From" Binding="{Binding From}" />
                 <DataGridTextColumn Header="To" Binding="{Binding To}" />
@@ -33,6 +33,7 @@
                 <CommandBinding Command="{x:Static ApplicationCommands.Cut}" CanExecute="CanCut" Executed="Cut"/>
                 <CommandBinding Command="{x:Static ApplicationCommands.New}" CanExecute="CanAddNew" Executed="AddNew"/>
             </DataGrid.CommandBindings>
+
             <DataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Command="{x:Static ApplicationCommands.Copy}" Header="Copy"/>
@@ -42,34 +43,7 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
-        <!--
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,0,34"> 
-            <ListView Name="SurveyView">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="From"
-					    DisplayMemberBinding="{Binding From}"
-					    Width="100"/>
-                        <GridViewColumn Header="To"
-					    DisplayMemberBinding="{Binding To}"
-					    Width="100"/>
-                        <GridViewColumn Header="Distance"
-					    DisplayMemberBinding="{Binding Distance, StringFormat='{}{0:0.00}'}"
-					    Width="100"/>
-                        <GridViewColumn Header="Azimuth"
-					    DisplayMemberBinding="{Binding Azimuth, StringFormat='{}{0:0.00}'}"
-					    Width="100"/>
-                        <GridViewColumn Header="Inclination"
-					    DisplayMemberBinding="{Binding Inclination, StringFormat='{}{0:0.0}'}"
-					    Width="100"/>
-                        <GridViewColumn Header="Comment"
-					    DisplayMemberBinding="{Binding Comment}"
-					    Width="100"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </ScrollViewer>
-        -->
+        
         <Button x:Name="OpenFile" Content="OpenFile" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="73" Click="OpenFile_Click" Grid.Row="2" Grid.Column="2" Height="22" RenderTransformOrigin="0.693,0.455"/>
         <Button x:Name="SetBack" Content="SetBak" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="73" Click="SetBack_Click" Grid.Row="2" Height="22" RenderTransformOrigin="0.56,2.091"/>
         <Button x:Name="ButtonChgPrefix" Content="Chg prefix" Grid.Column="1" HorizontalAlignment="Left" Margin="50,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="73" Click="ButtonChgPrefix_Click"/>
