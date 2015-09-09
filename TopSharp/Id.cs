@@ -59,7 +59,10 @@ namespace TopSharp
             //byte smtn = byteFile.ReadByte();
             this.val = byteFile.ReadUInt32();
         }
-
+        public Id(string stationName)
+        {
+            this.Name = stationName;
+        }
         public void Write(BinaryWriter bw)
         {
             bw.Write(val);

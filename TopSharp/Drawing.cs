@@ -29,6 +29,14 @@ namespace TopSharp
                 TypeOfElement = byteFile.ReadByte();
             }
         }
+
+        public Drawing()
+        {
+            this.mapping = new Mapping();
+            this.PolygonElements = new List<PolygonElement>();
+            this.XSectionElements = new List<XSectionElement>();
+        }
+
         public void Write(BinaryWriter bw)
         {
             mapping.Write(bw);

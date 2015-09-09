@@ -83,6 +83,40 @@ namespace TopSharp
             this.SideView = new Drawing(byteFile);
             this.FileLoaded = true;
         }
+        public TopFile(List<Station> Stations, TopFile file = null)
+        {
+            ch0 = 'T';
+            ch1 = 'o';
+            ch2 = 'p';
+            ver = 3;
+
+            this.TripCount = 1;
+            this.Trips = new List<Trip>() { new Trip() };
+
+            this.ShotsCount = (uint)Stations.Count;
+            this.Shots = new List<Shot>();
+            foreach (Station station in Stations)
+            {
+                Shots.Add(new Shot(station));
+            }
+
+            this.RefCount = 0;
+            this.References = new List<Reference>();
+
+            if (file != null)
+            {
+                this.OverView = file.OverView;
+                this.OutLine = file.OutLine;
+                this.SideView = file.SideView;
+            }
+            else
+            {
+                this.OverView = new Mapping();
+                this.OutLine = new Drawing();
+                this.SideView = new Drawing();
+            }
+            this.FileLoaded = true;
+        }
 
         public void SaveFile(string FileName)
         {

@@ -105,9 +105,9 @@ namespace TopSharp
             }
         }
 
-        byte flags;
-        byte roll;
-        UInt16 tripIndex;
+        public byte flags;
+        public byte roll;
+        public UInt16 tripIndex;
         public string Comment;
 
         public Shot(BinaryReader byteFile)
@@ -124,6 +124,23 @@ namespace TopSharp
             if (this.flags == 2)
             {
                 this.Comment = byteFile.ReadString();
+            }
+        }
+
+        public Shot(Station station)
+        {
+            this.Fr = new Id(station.From);
+            this.T = new Id(station.To);
+            this.Distance = station.Distance;
+            this.Azimuth = station.Azimuth;
+            this.Inclination = station.Inclination;
+            this.flags = station.flags;
+
+            this.roll = station.roll;
+            this.tripIndex = station.tripIndex;
+            if (this.flags == 2)
+            {
+                this.Comment = station.Comment;
             }
         }
 

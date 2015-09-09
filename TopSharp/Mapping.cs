@@ -17,6 +17,11 @@ namespace TopSharp
             this.scale = byteFile.ReadUInt32();
         }
 
+        public Mapping()
+        {
+            this.orgin = new Point();
+            this.scale = 500;
+        }
         public void Write(BinaryWriter bw)
         {
             orgin.Write(bw); bw.Write(scale);

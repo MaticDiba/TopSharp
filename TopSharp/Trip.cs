@@ -22,6 +22,14 @@ namespace TopSharp
             this.declination = byteFile.ReadInt16();
         }
 
+        public Trip()
+        {
+            this.TimeDT = DateTime.Now;
+            this.Time = this.TimeDT.Ticks;
+            this.Comment = "";
+            this.declination = Int16.MinValue;
+        }
+
         public void Write(BinaryWriter bw)
         {
             bw.Write(Time); bw.Write(Comment); bw.Write(declination);

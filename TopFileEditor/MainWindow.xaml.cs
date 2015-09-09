@@ -72,9 +72,10 @@ namespace TopFileEditor
 
         private void SetBack_Click(object sender, RoutedEventArgs e)
         {
+            // TODO zrihtat save
             if (this.topFile == null) return;
             int cnt = 0;
-            foreach (Station station in this.SurveyView.Items)
+            foreach (Station station in this.Stations)
             {
                 this.topFile.Shots[cnt].From = station.From;
                 this.topFile.Shots[cnt].To = station.To;
@@ -363,7 +364,8 @@ namespace TopFileEditor
             }
         }
     }
-    public class Station
+
+    /*public class Station
     {
         public string From { get; set; }
         public string To { get; set; }
@@ -406,6 +408,6 @@ namespace TopFileEditor
             return station;
         }
 
-    }
+    }*/
 
 }
