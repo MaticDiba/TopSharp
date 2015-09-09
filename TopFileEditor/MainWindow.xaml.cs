@@ -130,6 +130,14 @@ namespace TopFileEditor
             var selectedItems = grid.SelectedItems;
             var selectedColumns = grid.SelectedCells;
             var column = selectedColumns[0].Column.Header;
+
+            if (grid.SelectedItems.Count > 0)
+            {
+                //IList<Station> nene = (IList<Station>)grid.SelectedItems;
+                this.CopySelectedStations = new List<Station>();
+                foreach (Station stejsn in grid.SelectedItems)
+                    this.CopySelectedStations.Add(stejsn);
+            }
         }
 
         private void Cut(object sender, ExecutedRoutedEventArgs e)
