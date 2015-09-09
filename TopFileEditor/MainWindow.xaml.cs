@@ -26,7 +26,7 @@ namespace TopFileEditor
         private TopFile topFile;
         private List<Station> Stations;
         private List<Station> CopySelectedStations = new List<Station>();
-        private IList<DataGridCellInfo> CopySelectedCells = new List<DataGridCellInfo>();
+        private List<DataGridCell> CopySelectedCells = new List<DataGridCell>();
 
         private bool CanCutAllowed = false;
         public MainWindow()
@@ -108,10 +108,17 @@ namespace TopFileEditor
         {
             var grid = sender as DataGrid;
             this.CanCutAllowed = false;
-           /* var selectedItems = grid.SelectedItems;
+            /*
+            var selectedItems = grid.SelectedItems;
             var selectedColumns = grid.SelectedCells;
-            var column = selectedColumns[0].Column.Header;*/
-
+            */
+            //this.CopySelectedCells = grid.SelectedCells;
+            List<DataGridCell> cellList = new List<DataGridCell>();
+            this.CopySelectedCells = new List<DataGridCell>();
+            foreach (DataGridCellInfo cellInfo in grid.SelectedCells)
+            {
+                this.CopySelectedCells.Add((DataGridCell)cellInfo.Column.GetCellContent(cellInfo.Item).Parent);
+            }
             // For row copy
             if (grid.SelectedItems.Count > 0)
             {
@@ -126,14 +133,17 @@ namespace TopFileEditor
         {
             this.CanCutAllowed = true;
             //e.CanExecute = sender;
+            
             var grid = sender as DataGrid;
+            /*
             var selectedItems = grid.SelectedItems;
             var selectedColumns = grid.SelectedCells;
-            var column = selectedColumns[0].Column.Header;
+            IList<DataGridCellInfo> vaaar = grid.SelectedCells;
+            var column = selectedColumns[0].Column.Header;*/
+            //this.CopySelectedCells = grid.SelectedCells;
 
             if (grid.SelectedItems.Count > 0)
             {
-                //IList<Station> nene = (IList<Station>)grid.SelectedItems;
                 this.CopySelectedStations = new List<Station>();
                 foreach (Station stejsn in grid.SelectedItems)
                     this.CopySelectedStations.Add(stejsn);
@@ -159,6 +169,12 @@ namespace TopFileEditor
             int iCrrentSelectedRow = this.SurveyView.SelectedIndex;
             var ClipBoardText = Clipboard.GetData(DataFormats.Text);
             var selectedCells = this.SurveyView.SelectedCells.Count;
+            if (iCrrentSelectedRow < 0 && this.SurveyView.SelectedCells.Count > 0)
+            {
+                Station selectedStation = (Station)this.SurveyView.SelectedCells.First().Item;
+                iCrrentSelectedRow = this.SurveyView.Items.IndexOf(selectedStation);
+                //iCrrentSelectedRow = this.SurveyView.SelectedCells.First().Item;
+            }
             DataGrid fg = sender as DataGrid;
 
             switch (TypeOfClipboardData())
@@ -167,7 +183,7 @@ namespace TopFileEditor
                     InsertNewColumn2Grid(ClipBoardText.ToString(), iCrrentSelectedRow);
                     break;
                 case 2:
-                    InsertNewRow2Grid( iCrrentSelectedRow);
+                    InsertNewRow2Grid(iCrrentSelectedRow);
                     break;
                 case 3:
                     InsertNewRows2Grid(ClipBoardText.ToString(), iCrrentSelectedRow);
@@ -235,55 +251,39 @@ namespace TopFileEditor
 
         private void InsertNewColumn2Grid(string CopiedData, int position)
         {
-            if (this.SurveyView.SelectedCells.Count > 0)
+            int idxStation = -1;
+            foreach (DataGridCell cell in this.CopySelectedCells)
             {
-                foreach (string line in CopiedData.Trim().Split(new string[] { Environment.NewLine }, StringSplitOptions.None))
+                Station selectedStation = (Station)cell.DataContext;
+                if (idxStation < 0) idxStation = selectedStation.Idx;
+                else if (idxStation != selectedStation.Idx)
                 {
-                    string[] items = line.Trim().Split('\t');
-                    int i = 0;
-                    foreach (DataGridCellInfo cell in this.SurveyView.SelectedCells)
-                    {
-                        if (i >= items.Length)
-                            break;
-                        var nek = cell.Column.Header;
-                        switch (cell.Column.Header.ToString())
-                        {
-                            case "From":
-                                ((Station)cell.Item).From = items[i];
-                                break;
-                            case "To":
-                                ((Station)cell.Item).To = items[i];
-                                break;
-                            case "Distance":
-                                double val1;
-                                if (double.TryParse(items[i], out val1))
-                                {
-                                    ((Station)cell.Item).Distance = val1;
-                                }
-                                break;
-                            case "Azimuth":
-                                double val2;
-                                if (double.TryParse(items[i], out val2))
-                                {
-                                    ((Station)cell.Item).Azimuth = val2;
-                                }
-                                break;
-                            case "Inclination":
-                                double val3;
-                                if (double.TryParse(items[i], out val3))
-                                {
-                                    ((Station)cell.Item).Inclination = val3;
-                                }
-                                break;
-                            case "Comment":
-                                ((Station)cell.Item).Comment = items[i];
-                                break;
-                        }
-                        i++;
-                    }
+                    position += 1;
+                    idxStation = selectedStation.Idx;
                 }
-                this.SurveyView.Items.Refresh();
+                switch (cell.Column.Header.ToString())
+                {
+                    case "From":
+                        this.Stations[position].From = selectedStation.From;
+                        break;
+                    case "To":
+                        this.Stations[position].To = selectedStation.To;
+                        break;
+                    case "Distance":
+                        this.Stations[position].Distance = selectedStation.Distance;
+                        break;
+                    case "Azimuth":
+                        this.Stations[position].Azimuth = selectedStation.Azimuth;
+                        break;
+                    case "Inclination":
+                        this.Stations[position].Inclination = selectedStation.Inclination;
+                        break;
+                    case "Comment":
+                        this.Stations[position].Comment = selectedStation.Comment;
+                        break;
+                }
             }
+            this.SurveyView.Items.Refresh();
         }
 
         private void DeleteSelectedRows()
@@ -312,7 +312,7 @@ namespace TopFileEditor
             if (TexboxPrefix.Text.Length > 0 && int.TryParse(TexboxPrefix.Text, out pref))
             {
                 string prefix = TexboxPrefix.Text.Trim();
-                foreach (Station station in this.SurveyView.Items)
+                foreach (Station station in this.Stations)
                 {
                     string oldPref = station.From.Substring(0, station.From.IndexOf(","));
                     string oldAppendix = station.From.Substring(station.From.IndexOf(","));
