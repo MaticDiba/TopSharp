@@ -85,6 +85,7 @@ namespace TopFileEditor
                 this.topFile.Shots[cnt].Comment = station.Comment;
                 cnt++;
             }
+            this.topFile.SaveFile("test-put.top");
         }
 
         private void SurveyView_CopyingRowClipboardContent(object sender, DataGridRowClipboardEventArgs e)
