@@ -55,7 +55,10 @@
                 </MenuItem>
                 <MenuItem Header="_Save..." Click="SetBack_Click" >
 
-                </MenuItem> 
+                </MenuItem>
+                <MenuItem Header="_Import..." Click="Import_Click" >
+
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="_Edit " />
             <MenuItem Header="_View " />

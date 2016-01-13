@@ -42,9 +42,9 @@ namespace TopSharp
             mapping.Write(bw);
 
             foreach (PolygonElement el in PolygonElements) el.Write(bw);
-            bw.Write(0);
+            //bw.Write(0);
             foreach (XSectionElement el in XSectionElements) el.Write(bw);
-            bw.Write(0);
+            bw.Write((byte)0);
         }
     }
 

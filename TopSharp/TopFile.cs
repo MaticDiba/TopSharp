@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace TopSharp
@@ -60,6 +61,79 @@ namespace TopSharp
         Drawing OutLine;
         Drawing SideView;
         private bool FileLoaded = false;
+        
+
+        public TopFile(StreamReader b)
+        {
+            ch0 = 'T';
+            ch1 = 'o';
+            ch2 = 'p';
+
+            ver = (byte)3;
+
+
+            this.TripCount = 1;
+            this.Trips = new List<Trip>() { new Trip(DateTime.Now, "", 0) };
+
+            this.ShotsCount = LoadSurvexFile(b);
+            //this.Shots = LoadShotList(b, this.ShotsCount);
+            
+            this.RefCount = 0;
+            this.References = new List<Reference>();
+
+            this.OverView = new Mapping();
+            this.OutLine = new Drawing();
+            this.SideView = new Drawing();
+            this.FileLoaded = true;
+        }
+
+        private uint LoadSurvexFile(StreamReader b)
+        {
+            uint noShots = 0;
+            int prefix = 600;
+            int prefixAdd = 0;
+            Dictionary<string, int> rPrefix = new Dictionary<string, int>();
+            while (!b.EndOfStream)
+            {
+                string line = b.ReadLine();
+                if (line.Trim().Length == 0) continue;
+
+                List<string> splittedLine = Regex.Split(line, "[\\s]+").ToList();
+
+                if (splittedLine[0].Contains(";") || splittedLine[0].Contains("*"))
+                {
+                    if (splittedLine[0].Contains("begin"))
+                    {
+                        rPrefix.Add(splittedLine[1], prefix);
+                        int.TryParse(Regex.Match(line, "\\d+").Value, out prefixAdd);
+                    }
+                    else if (splittedLine[0].Contains("equate"))
+                    {
+                        string equate0 = splittedLine[1];
+                        string equate1 = splittedLine[2];
+
+                        Shot connectingShot = new Shot(equate0, equate1, prefix, rPrefix, prefixAdd);
+                        this.Shots.Add(connectingShot);
+                        noShots += 1;
+                    }
+                    else
+                    {
+                        //if (splittedLine[0].Contains("end")) prefix += 1;
+                        continue;
+                    }
+                    
+                }
+                if(splittedLine.Count < 5){
+                    continue;
+                }
+                Shot newShot = new Shot(splittedLine, prefix, prefixAdd);
+                this.Shots.Add(newShot);
+
+                noShots += 1;
+            }
+            return noShots;
+        }
+
 
         public TopFile(BinaryReader byteFile)
         {
@@ -118,6 +192,7 @@ namespace TopSharp
             this.FileLoaded = true;
         }
 
+        
         public void SaveFile(string FileName)
         {
             using (BinaryWriter bw = new BinaryWriter(File.Open(FileName, FileMode.Create)))

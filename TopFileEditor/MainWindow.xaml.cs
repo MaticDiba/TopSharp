@@ -85,7 +85,7 @@ namespace TopFileEditor
                 this.topFile.Shots[cnt].Comment = station.Comment;
                 cnt++;
             }
-            this.topFile.SaveFile("test-put.top");
+            this.topFile.SaveFile("test-rene1.top");
         }
 
         private void SurveyView_CopyingRowClipboardContent(object sender, DataGridRowClipboardEventArgs e)
@@ -362,6 +362,27 @@ namespace TopFileEditor
             foreach (var item in selected)
             {
                 var dog = item;
+            }
+        }
+
+        private void Import_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+            dlg.Filter = "top files (*.svx)|*.svx";
+            dlg.Title = "Please select an svx file to open.";
+
+            Nullable<bool> result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                string filename = dlg.FileName;
+                using (StreamReader b = new StreamReader(filename))
+                {
+                    this.topFile = new TopFile(b);
+                    
+                    LoadGrid();
+                }
             }
         }
     }

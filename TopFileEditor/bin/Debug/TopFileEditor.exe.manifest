@@ -42,26 +42,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TopFileEditor.exe" size="20992">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TopFileEditor.exe" size="21504">
       <assemblyIdentity name="TopFileEditor" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>j9dmNYo7QpJQl3OBJQCwpbRwx8REEP4qrmYQ7rqIs+4=</dsig:DigestValue>
+        <dsig:DigestValue>6kHo4dcoQBhCJt+2zipSDRsfHlipmqm2MjMZWY1XLQI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TopSharp.dll" size="13824">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TopSharp.dll" size="15872">
       <assemblyIdentity name="TopSharp" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>x2bC9ToGOR9nG9FwrORbKRwLhFfU6Ge4HJGmUppzq2c=</dsig:DigestValue>
+        <dsig:DigestValue>DhVOI+cYSwoZ8nTBVCZhQoulKcqtQHb52UTQ9vwxUPM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

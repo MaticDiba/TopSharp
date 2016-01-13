@@ -24,7 +24,9 @@ namespace TopSharp
         }
         public void Write(BinaryWriter bw)
         {
-            orgin.Write(bw); bw.Write(scale);
+            orgin.Write(bw);
+
+            bw.Write(scale);
         }
     }
 }

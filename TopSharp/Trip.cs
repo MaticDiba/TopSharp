@@ -30,6 +30,15 @@ namespace TopSharp
             this.declination = Int16.MinValue;
         }
 
+        public Trip(DateTime p1, string p2, Int16 p3)
+        {
+            // TODO: Complete member initialization
+            this.Time = p1.Ticks;
+            this.TimeDT = p1;
+            this.Comment = p2;
+            this.declination = p3;
+        }
+
         public void Write(BinaryWriter bw)
         {
             bw.Write(Time); bw.Write(Comment); bw.Write(declination);
