@@ -32,3 +32,22 @@ D:\My Documents\Visual Studio 2012\Projects\Private\TopOpener\TopFileEditor\bin\
 D:\My Documents\Visual Studio 2012\Projects\Private\TopOpener\TopFileEditor\bin\Debug\TopFileEditor.application
 D:\My Documents\Visual Studio 2012\Projects\Private\TopOpener\TopFileEditor\obj\Debug\TopFileEditor.exe.manifest
 D:\My Documents\Visual Studio 2012\Projects\Private\TopOpener\TopFileEditor\obj\Debug\TopFileEditor.application
+D:\Projects\NET\TopSharp\TopFileEditor\bin\Debug\TopFileEditor.exe.config
+D:\Projects\NET\TopSharp\TopFileEditor\obj\Debug\TopFileEditor.exe
+D:\Projects\NET\TopSharp\TopFileEditor\obj\Debug\TopFileEditor.pdb
+D:\Projects\NET\TopSharp\TopFileEditor\bin\Debug\TopFileEditor.exe.manifest
+D:\Projects\NET\TopSharp\TopFileEditor\bin\Debug\TopFileEditor.application
+D:\Projects\NET\TopSharp\TopFileEditor\bin\Debug\TopFileEditor.exe
+D:\Projects\NET\TopSharp\TopFileEditor\bin\Debug\TopFileEditor.pdb
+D:\Projects\NET\TopSharp\TopFileEditor\bin\Debug\TopSharp.dll
+D:\Projects\NET\TopSharp\TopFileEditor\bin\Debug\TopSharp.pdb
+D:\Projects\NET\TopSharp\TopFileEditor\obj\Debug\TopFileEditor.csprojResolveAssemblyReference.cache
+D:\Projects\NET\TopSharp\TopFileEditor\obj\Debug\MainWindow.baml
+D:\Projects\NET\TopSharp\TopFileEditor\obj\Debug\MainWindow.g.cs
+D:\Projects\NET\TopSharp\TopFileEditor\obj\Debug\App.g.cs
+D:\Projects\NET\TopSharp\TopFileEditor\obj\Debug\TopFileEditor_MarkupCompile.cache
+D:\Projects\NET\TopSharp\TopFileEditor\obj\Debug\TopFileEditor.g.resources
+D:\Projects\NET\TopSharp\TopFileEditor\obj\Debug\TopFileEditor.Properties.Resources.resources
+D:\Projects\NET\TopSharp\TopFileEditor\obj\Debug\TopFileEditor.csproj.GenerateResource.Cache
+D:\Projects\NET\TopSharp\TopFileEditor\obj\Debug\TopFileEditor.exe.manifest
+D:\Projects\NET\TopSharp\TopFileEditor\obj\Debug\TopFileEditor.application
