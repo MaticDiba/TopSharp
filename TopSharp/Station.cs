@@ -47,6 +47,19 @@ namespace TopSharp
             this.roll = shot.roll;
             this.tripIndex = shot.tripIndex;
         }
+        public Station(string row)
+        {
+            string[] splitted = row.Split('\t');
+            this.From = splitted[0];
+            this.To = splitted[1];
+            this.Distance = double.Parse( splitted[2]);
+            this.Azimuth =double.Parse( splitted[3]);
+            this.Inclination = double.Parse(splitted[4]);
+            this.Comment = "";
+            this.flags = 0;
+            this.roll = 0;
+            this.tripIndex = 1;
+        }
 
         public Station() { }
 

@@ -29,7 +29,7 @@ namespace TopSharp
             }
             set
             {
-                if (value == null)
+                if (value == null || value.Length == 0)
                 {
                     this.val = 2147483648;
                 }

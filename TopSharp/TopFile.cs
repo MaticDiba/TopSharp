@@ -192,7 +192,29 @@ namespace TopSharp
             this.FileLoaded = true;
         }
 
-        
+        public TopFile()
+        {
+            ch0 = 'T';
+            ch1 = 'o';
+            ch2 = 'p';
+
+            ver = 3;
+
+            this.TripCount = 0;
+            this.Trips = new List<Trip>();
+
+            this.ShotsCount = 0;
+            this.Shots = new List<Shot>();
+
+            this.RefCount = 0;
+            this.References = new List<Reference>();
+
+            this.OverView = new Mapping();
+            this.OutLine = new Drawing();
+            this.SideView = new Drawing();
+            this.FileLoaded = true;
+        }
+
         public void SaveFile(string FileName)
         {
             using (BinaryWriter bw = new BinaryWriter(File.Open(FileName, FileMode.Create)))

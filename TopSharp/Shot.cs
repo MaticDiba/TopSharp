@@ -122,9 +122,18 @@ namespace TopSharp
 
             this.roll = byteFile.ReadByte();
             this.tripIndex = byteFile.ReadUInt16();
-            if (this.flags == 2)
+            //if (this.flags == 2)
+            if(IsBitSet(this.flags, 1))
             {
-                this.Comment = byteFile.ReadString();
+                byte bytek = byteFile.ReadByte();
+                byte[] stringec = byteFile.ReadBytes(((int)bytek));
+
+                foreach(byte bajt in stringec)
+                {
+                    this.Comment += (char)bajt;
+                }
+                /*this.Comment = byteFile.ReadString();
+                int len = Comment.Length;*/
             }
         }
 
@@ -144,6 +153,10 @@ namespace TopSharp
                 this.Comment = station.Comment;
             }
         }
+        bool IsBitSet(byte b, int pos)
+        {
+            return (b & (1 << pos)) != 0;
+        }
 
         public Shot(List<string> splittedLine, int prefix, int prefixAdd)
         {
@@ -161,7 +174,7 @@ namespace TopSharp
             //TODO: A je to prou da je 0?
             this.roll = 0;
             this.tripIndex = 0;
-            if (this.flags == 2)
+            if (IsBitSet(this.flags, 1))
             {
                 this.Comment = "";
             }
@@ -192,7 +205,7 @@ namespace TopSharp
             //TODO: A je to prou da je 0?
             this.roll = 0;
             this.tripIndex = 0;
-            if (this.flags == 2)
+            if (IsBitSet(this.flags, 1))
             {
                 this.Comment = "";
             }

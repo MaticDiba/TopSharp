@@ -24,6 +24,7 @@ namespace TopFileEditor
     public partial class MainWindow : Window
     {
         private TopFile topFile;
+        private List<TopFile> topFilesFromFolder = new List<TopFile>();
         private List<Station> Stations;
         private List<Station> CopySelectedStations = new List<Station>();
         private List<DataGridCell> CopySelectedCells = new List<DataGridCell>();
@@ -77,15 +78,22 @@ namespace TopFileEditor
             int cnt = 0;
             foreach (Station station in this.Stations)
             {
-                this.topFile.Shots[cnt].From = station.From;
-                this.topFile.Shots[cnt].To = station.To;
-                this.topFile.Shots[cnt].Distance = station.Distance;
-                this.topFile.Shots[cnt].Azimuth = station.Azimuth;
-                this.topFile.Shots[cnt].Inclination = station.Inclination;
-                this.topFile.Shots[cnt].Comment = station.Comment;
+                if (this.topFile.Shots.Count > cnt)
+                {
+                    this.topFile.Shots[cnt].From = station.From;
+                    this.topFile.Shots[cnt].To = station.To;
+                    this.topFile.Shots[cnt].Distance = station.Distance;
+                    this.topFile.Shots[cnt].Azimuth = station.Azimuth;
+                    this.topFile.Shots[cnt].Inclination = station.Inclination;
+                    this.topFile.Shots[cnt].Comment = station.Comment;
+                }
+                else
+                {
+                    this.topFile.Shots.Add(new Shot(station));
+                }
                 cnt++;
             }
-            this.topFile.SaveFile("test-rene1.top");
+            this.topFile.SaveFile("test-trubar-pt1.top");
         }
 
         private void SurveyView_CopyingRowClipboardContent(object sender, DataGridRowClipboardEventArgs e)
@@ -162,8 +170,19 @@ namespace TopFileEditor
         private void CanPaste(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = Clipboard.ContainsData(DataFormats.Text);
-            
+            /*string sData = Clipboard.GetText();
+            FillStations(sData);*/
             e.Handled = true;
+        }
+
+        private void FillStations(string sData)
+        {
+            foreach (string row in sData.Split(new string[] { Environment.NewLine }, StringSplitOptions.None))
+            {
+                if (row.Length == 0)
+                    continue;
+                this.Stations.Add(new Station(row));
+            }
         }
 
         private void Paste(object sender, ExecutedRoutedEventArgs e)
@@ -248,6 +267,7 @@ namespace TopFileEditor
                 this.Stations.Insert(position, station);
                 position++;
             }
+            FillStations(CopiedData);
             this.SurveyView.Items.Refresh();
         }
 
@@ -384,6 +404,63 @@ namespace TopFileEditor
                     LoadGrid();
                 }
             }
+        }
+
+        private void ImportFromFolder_Click(object sender, RoutedEventArgs e)
+        {
+            string sFolderName = @"D:\Documents\Jame\Platon\pocketopop\all";
+            LoadAllTopFilesFromFolder(sFolderName);
+        }
+
+        private void LoadAllTopFilesFromFolder(string sFolderName)
+        {
+            string[] files = Directory.GetFiles(sFolderName);
+            topFilesFromFolder = new List<TopFile>();
+            foreach(string file in files)
+            {
+                if (file.Substring(file.LastIndexOf(".")).Contains("top"))
+                {
+                    TopFile TopFile = new TopFile(new BinaryReader((new StreamReader(file)).BaseStream));
+                    topFilesFromFolder.Add(TopFile);
+                }
+            }
+            MessageBox.Show("Done");
+        }
+
+        private void Export2tsv_Click(object sender, RoutedEventArgs e)
+        { 
+            using (StreamWriter sw = new StreamWriter("export_platon.tsv"))
+            {
+                foreach (TopFile tfile in topFilesFromFolder)
+                {
+                    foreach (string line in GetLinesFromPocketTopo(tfile))
+                        sw.WriteLine(line);
+                }
+            }
+        }
+
+        private IEnumerable<string> GetLinesFromPocketTopo(TopFile tfile)
+        {
+            foreach(var groupedElements in tfile.Shots.GroupBy(x => new { x.From, x.To }))
+            {
+                if (groupedElements.Key.To == null)
+                {
+                    /*foreach (var pt in groupedElements)
+                        yield return string.Format("{0}\t{1}\t{2}\t{3}\t{4}", pt.From, pt.To == null ? "*" : pt.To, pt.Distance, pt.Azimuth, pt.Inclination);*/
+                }
+                else
+                {
+                    
+                    yield return string.Format("{0}\t{1}\t{2}\t{3}\t{4}", groupedElements.First().From, groupedElements.First().To == null ? "*" : groupedElements.First().To, groupedElements.Average(el => el.Distance), groupedElements.Average(el => el.Azimuth), groupedElements.Average(el => el.Inclination));
+                }
+            }
+        }
+
+        private void NewFile_Click(object sender, RoutedEventArgs e)
+        {
+            TopFile top = new TopFile();
+            this.topFile = top;
+            LoadGrid();
         }
     }
 

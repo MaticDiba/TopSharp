@@ -3,3 +3,8 @@ D:\My Documents\Visual Studio 2012\Projects\Private\TopOpener\TopSharp\bin\Debug
 D:\My Documents\Visual Studio 2012\Projects\Private\TopOpener\TopSharp\obj\Debug\TopSharp.dll
 D:\My Documents\Visual Studio 2012\Projects\Private\TopOpener\TopSharp\obj\Debug\TopSharp.pdb
 D:\My Documents\Visual Studio 2012\Projects\Private\TopOpener\TopSharp\obj\Debug\TopSharp.csprojResolveAssemblyReference.cache
+D:\Projects\NET\TopSharp\TopSharp\bin\Debug\TopSharp.dll
+D:\Projects\NET\TopSharp\TopSharp\bin\Debug\TopSharp.pdb
+D:\Projects\NET\TopSharp\TopSharp\obj\Debug\TopSharp.csprojResolveAssemblyReference.cache
+D:\Projects\NET\TopSharp\TopSharp\obj\Debug\TopSharp.dll
+D:\Projects\NET\TopSharp\TopSharp\obj\Debug\TopSharp.pdb

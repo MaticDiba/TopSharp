@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TopFileEditor.exe" size="21504">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TopFileEditor.exe" size="28104">
       <assemblyIdentity name="TopFileEditor" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>6kHo4dcoQBhCJt+2zipSDRsfHlipmqm2MjMZWY1XLQI=</dsig:DigestValue>
+        <dsig:DigestValue>0UOIxnILS9l/S0/HEM9UId5fCqRW/6mgkODeKiTGRdc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -61,7 +61,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>DhVOI+cYSwoZ8nTBVCZhQoulKcqtQHb52UTQ9vwxUPM=</dsig:DigestValue>
+        <dsig:DigestValue>reiSP7cWLxzxdwuwtqiwTa1lGH1XeJ7j+u//yIo1QGI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
