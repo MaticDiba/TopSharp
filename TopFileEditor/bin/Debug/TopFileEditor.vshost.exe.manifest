@@ -49,19 +49,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>0UOIxnILS9l/S0/HEM9UId5fCqRW/6mgkODeKiTGRdc=</dsig:DigestValue>
+        <dsig:DigestValue>y/ZprluxQKy/VEPqhq3cR6nHGHoNxNZLjb6jjzK3cLs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TopSharp.dll" size="15872">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TopSharp.dll" size="16384">
       <assemblyIdentity name="TopSharp" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>reiSP7cWLxzxdwuwtqiwTa1lGH1XeJ7j+u//yIo1QGI=</dsig:DigestValue>
+        <dsig:DigestValue>ZtgeG6cT18Smn3baFjObd4E2MWi3gv5MlGQoj7RL4MY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
