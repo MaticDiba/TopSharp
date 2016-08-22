@@ -30,6 +30,10 @@ namespace TopFileEditor
         private List<DataGridCell> CopySelectedCells = new List<DataGridCell>();
 
         private bool CanCutAllowed = false;
+
+        public string Path4MultipleFiles { get; private set; }
+        public List<TopFile> MultipleTopFiles { get; private set; }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -461,6 +465,75 @@ namespace TopFileEditor
             TopFile top = new TopFile();
             this.topFile = top;
             LoadGrid();
+        }
+
+        private void OpenMultiple_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            if (Properties.Settings.Default.LastUsedMultipleFolder.Length > 0)
+            {
+                dialog.SelectedPath = Properties.Settings.Default.LastUsedMultipleFolder;
+            }
+            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+            Properties.Settings.Default.LastUsedMultipleFolder = dialog.SelectedPath;
+            Properties.Settings.Default.Save();
+
+            Path4MultipleFiles = dialog.SelectedPath; //@"D:\My Documents\Visual Studio 2012\Projects\Private\TopOpener\TopFileEditor\bin\Debug\multipletest";// 
+            try
+            {
+                this.MultipleTopFiles = ImportExportHelper.LoadMultipleFilesFromFolder(Path4MultipleFiles);
+
+                this.MultipleTopFiles = ImportExportHelper.RenumberStationsForFiles(this.MultipleTopFiles);
+            }catch
+            {
+
+            }
+            if (MultipleTopFiles.Count > 0)
+            {
+                Export2Survex.IsEnabled = true;
+                MessageBox.Show(string.Format("{0} files successfully imported.", this.MultipleTopFiles.Count));
+            }
+            else MessageBox.Show("Import failed!");
+            
+        }
+
+        private void Export2survex_Click(object sender, RoutedEventArgs e)
+        {
+            SurvexSaveParameters dlgSurvex = new SurvexSaveParameters(this.MultipleTopFiles);
+            dlgSurvex.Owner = this;
+            dlgSurvex.ShowDialog();
+            if (dlgSurvex.DialogResult == true)
+            {
+                string name = dlgSurvex.tbName.Text;
+                string xcoor = dlgSurvex.tbXCoor.Text;
+                string ycoor = dlgSurvex.tbYCoor.Text;
+                string elev = dlgSurvex.tbEntrancElev.Text;
+                string refPoint = dlgSurvex.lbFileName.SelectedItem.ToString();
+
+                if(refPoint.IndexOf(".") > 0)
+                {
+                    refPoint.Replace(".", ",");
+                }
+
+                string sFile = ImportExportHelper.ExportMultipleFiles2SurvexFile(this.MultipleTopFiles, name, xcoor, ycoor, elev, refPoint);
+
+                Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+                dlg.FileName = "Document"; // Default file name
+                dlg.DefaultExt = ".survex"; // Default file extension
+                dlg.Filter = "Survex Documents (.svx)|*.svx";
+
+                Nullable<bool> result = dlg.ShowDialog();
+
+                // Process save file dialog box results
+                if (result == true)
+                {
+                    // Save document
+                    string filename = dlg.FileName;
+                    File.WriteAllText(filename, sFile);
+                    MessageBox.Show("File successfully saved!");
+                }
+            }
         }
     }
 

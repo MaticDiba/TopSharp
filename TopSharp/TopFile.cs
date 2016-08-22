@@ -61,10 +61,15 @@ namespace TopSharp
         Drawing OutLine;
         Drawing SideView;
         private bool FileLoaded = false;
-        
+
+        public List<Tuple<int, string, string>> ConnectingStation { get; set; }
+        public int MultipleIndex { get; set; }
+        public string FileName { get; set; }
+        public Dictionary<string, string> StationMappings { get; set; }
 
         public TopFile(StreamReader b)
         {
+            ConnectingStation = new List<Tuple<int, string, string>>();
             ch0 = 'T';
             ch1 = 'o';
             ch2 = 'p';
@@ -137,6 +142,7 @@ namespace TopSharp
 
         public TopFile(BinaryReader byteFile)
         {
+            this.ConnectingStation = new List<Tuple<int, string, string>>();
             ch0 = byteFile.ReadChar();
             ch1 = byteFile.ReadChar();
             ch2 = byteFile.ReadChar();

@@ -42,36 +42,36 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TopFileEditor.exe" size="28104">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TopFileEditor.exe" size="47048">
       <assemblyIdentity name="TopFileEditor" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>y/ZprluxQKy/VEPqhq3cR6nHGHoNxNZLjb6jjzK3cLs=</dsig:DigestValue>
+        <dsig:DigestValue>SIg7jg/2QLj7gNAyG6Ax070q0unZkJNEdi55mxHcE7I=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TopSharp.dll" size="16384">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TopSharp.dll" size="16896">
       <assemblyIdentity name="TopSharp" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ZtgeG6cT18Smn3baFjObd4E2MWi3gv5MlGQoj7RL4MY=</dsig:DigestValue>
+        <dsig:DigestValue>AdsiVsz0ipbYj//NhT1vpvgaZLDCWpQ1B0GNb1Z+p5o=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="TopFileEditor.exe.config" size="187">
+  <file name="TopFileEditor.exe.config" size="937">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>xm4bo26HQ0LNVwz1vdPYtzhkpMnp2AI5i+f0b+OahTI=</dsig:DigestValue>
+      <dsig:DigestValue>b0EsVdg46XybCnkkF5FogBdKi/JRIDYziUcrjSvEbu0=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

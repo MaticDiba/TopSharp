@@ -21,6 +21,7 @@
                 <MenuItem Header="_Open..." Click="OpenFile_Click" >
 
                 </MenuItem>
+                <MenuItem Header="_Open multiple..." Click="OpenMultiple_Click" />
                 <MenuItem Header="_New..." Click="NewFile_Click" />
                 <MenuItem Header="_Save..." Click="SetBack_Click" >
 
@@ -31,6 +32,7 @@
                 </MenuItem>
                 <MenuItem Header="_Export..."  >
                     <MenuItem Header="_Export to tsv" Click="Export2tsv_Click"/>
+                    <MenuItem Name="Export2Survex" Header="_Export to survex" Click="Export2survex_Click" IsEnabled="False"/>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="_Edit " />

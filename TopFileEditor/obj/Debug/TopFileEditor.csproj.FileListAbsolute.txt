@@ -51,3 +51,6 @@ D:\Projects\NET\TopSharp\TopFileEditor\obj\Debug\TopFileEditor.Properties.Resour
 D:\Projects\NET\TopSharp\TopFileEditor\obj\Debug\TopFileEditor.csproj.GenerateResource.Cache
 D:\Projects\NET\TopSharp\TopFileEditor\obj\Debug\TopFileEditor.exe.manifest
 D:\Projects\NET\TopSharp\TopFileEditor\obj\Debug\TopFileEditor.application
+D:\My Documents\Visual Studio 2012\Projects\Private\TopOpener\TopFileEditor\obj\Debug\SurvexSaveParameters.g.cs
+D:\My Documents\Visual Studio 2012\Projects\Private\TopOpener\TopFileEditor\obj\Debug\TopFileEditor_MarkupCompile.lref
+D:\My Documents\Visual Studio 2012\Projects\Private\TopOpener\TopFileEditor\obj\Debug\SurvexSaveParameters.baml
