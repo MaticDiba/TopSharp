@@ -509,8 +509,9 @@ namespace TopFileEditor
                 string xcoor = dlgSurvex.tbXCoor.Text;
                 string ycoor = dlgSurvex.tbYCoor.Text;
                 string elev = dlgSurvex.tbEntrancElev.Text;
-                string refPoint = dlgSurvex.lbFileName.SelectedItem.ToString();
-
+                string refPointFile = dlgSurvex.lbFileName.SelectedItem.ToString();
+                string refPoint = dlgSurvex.lbStationName.SelectedItem.ToString();
+                refPoint = this.MultipleTopFiles.First(fl => fl.FileName == refPointFile).StationMappings.First(stat => stat.Key == refPoint).Value;
                 if(refPoint.IndexOf(".") > 0)
                 {
                     refPoint.Replace(".", ",");
@@ -531,6 +532,8 @@ namespace TopFileEditor
                     // Save document
                     string filename = dlg.FileName;
                     File.WriteAllText(filename, sFile);
+                    ImportExportHelper.WriteSurvexSaveConfig(new List<string>() {name, xcoor, ycoor, elev, refPointFile, refPoint },
+                        Properties.Settings.Default.LastUsedMultipleFolder);
                     MessageBox.Show("File successfully saved!");
                 }
             }

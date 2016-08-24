@@ -38,7 +38,14 @@ namespace TopFileEditor
                 Test test = new Test(fajl);
                 TestItems.Add(test);
             }
-
+            string[] oldValues = ImportExportHelper.OpenSurvexSaveConfig(Properties.Settings.Default.LastUsedMultipleFolder);
+            if(oldValues != null && oldValues.Length == 6)
+            {
+                this.tbName.Text = oldValues[0];
+                this.tbXCoor.Text = oldValues[1];
+                this.tbYCoor.Text = oldValues[2];
+                this.tbEntrancElev.Text = oldValues[3];
+            }
             Stations = new List<TmpStation>();
         }
 

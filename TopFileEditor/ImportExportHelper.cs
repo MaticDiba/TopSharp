@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using TopSharp;
 
 namespace TopFileEditor
@@ -66,6 +67,43 @@ namespace TopFileEditor
 
         }
 
+        internal static string[] OpenSurvexSaveConfig(string lastUsedMultipleFolder)
+        {
+            List<string> configValues = new List<string>();
+            XmlDocument doc = new XmlDocument();
+            if (File.Exists(string.Format("{0}\\{1}", lastUsedMultipleFolder, "survex.conf")))
+            {
+
+                doc.Load(string.Format("{0}\\{1}", lastUsedMultipleFolder, "survex.conf"));
+                XmlNodeList nodes = doc.SelectNodes("root/value");
+                foreach (XmlNode node in nodes)
+                {
+                    string value = node.Attributes["value"].Value;
+                    configValues.Add(value);
+                }
+            }
+
+            return configValues.ToArray();
+        }
+
+        internal static void WriteSurvexSaveConfig(List<string> values, string path2save)
+        {
+            if(values.Count == 6)
+            {
+                XmlDocument doc = new XmlDocument();
+                XmlElement elem = doc.CreateElement("root");
+                foreach(var val in values)
+                {
+                    var valelem = doc.CreateElement("value");
+                    valelem.SetAttribute("value", val);
+                    elem.AppendChild(valelem);
+                }
+                doc.AppendChild(elem);
+                doc.Save(string.Format("{0}\\{1}", path2save, "survex.conf"));
+            }
+            
+        }
+
         private static void CleanDoubleConnections(List<TopFile> multipleTopFiles)
         {
             
@@ -124,16 +162,19 @@ namespace TopFileEditor
             sbSurvexFile.AppendFormat("*entrance {2}{0}.{1}\r\n", firstPoint[0], firstPoint[1], filePrefix);
             int i = 0;
             List<int> processedFiles = new List<int>();
+            List<string[]> processedConnections = new List<string[]>();
             foreach (var file in multipleTopFiles)
             {
                 sbSurvexFile.AppendFormat("; FileName: {0}\r\n", file.FileName);
-                if (i > 0)
+                if (file.MultipleIndex != int.Parse(firstPoint[0]))
                 {
                     foreach(var station in file.ConnectingStation)
                     {
-                        if (!processedFiles.Contains(station.Item1))
+                        if (processedConnections.Count(stat => stat == new string[] { station.Item2, station.Item3 } || stat == new string[] { station.Item3, station.Item2 }) > 0)
                             continue;
-                        if (station.Item1 != file.MultipleIndex)
+                        /*if (!processedFiles.Contains(station.Item1))
+                            continue;*/
+                        //if (station.Item1 != file.MultipleIndex)
                         {
                             //var tmp = multipleTopFiles[0].Shots.First(s => s.From == station.Item2 || s.To == station.Item2);
                             //var tmp2 = file.Shots.First(s => s.From == station.Item2 || s.To == station.Item2);
@@ -147,6 +188,7 @@ namespace TopFileEditor
                             { }
                             //file.Shots.ForEach(statio => { Console.Write("{0}\t->\t{1}\t:\t", statio.From, statio.To != null ? statio.To : "\t"); Console.WriteLine(); });
                             sbSurvexFile.AppendFormat("*equate {2}{0} 	{2}{1}\r\n", station.Item2.Replace(",", "."), station.Item3.Replace(",", "."), filePrefix);
+                            processedConnections.Add(new string[] { station.Item2.Replace(",", "."), station.Item3.Replace(",", ".") });
                             //sbSurvexFile.AppendFormat("*equate r{0} 	r{1}\r\n", station.Item2.Replace(",", "."), connectionShot[1].Replace(",", "."));
                         }
                     }
@@ -241,7 +283,7 @@ namespace TopFileEditor
                             var connections = fileSecond.ConnectingStation[j];
                             if (connections.Item1 != file.MultipleIndex) continue;
                             string newValueFrom = mappingOfOldValue[connections.Item2];
-                            fileSecond.ConnectingStation[j] = new Tuple<int, string, string>(connections.Item1, newValueFrom, connections.Item2);
+                            fileSecond.ConnectingStation[j] = new Tuple<int, string, string>(connections.Item1, newValueFrom, connections.Item3);
                         }
                     }
                     
